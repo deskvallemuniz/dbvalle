@@ -82,8 +82,18 @@ export const createWindow = (
     }
   })
 
-  ipcMain.on('ipc-example', async (event, data) => {
+  ipcMain.on("fetch-data", async (event, data) => {
+    const connection = await knex({
+      client: 'mysql',
+      connection: 'mysql://root:123456@185.173.110.169:32769/afiliado'
+    })
 
+    const info = await connection.raw(data.filter)
+    console.log("I", info)
+    event.reply("fetch-data-main", { tab: data.tab, data: info[0], metadata: info[1] })
+  })
+
+  ipcMain.on('ipc-example', async (event, data) => {
 
     const connection = await knex({
       client: 'mysql',
@@ -100,9 +110,9 @@ export const createWindow = (
 
     const info = await connection.raw("SELECT * FROM information_schema.tables WHERE TABLE_SCHEMA = 'afiliado'")
     console.log("I", info)
-    
 
-    event.reply("table-info", {data: info[0], medatada: info[1]})
+
+    event.reply("table-info", { data: info[0], medatada: info[1] })
   })
 
   win.on('close', saveState)

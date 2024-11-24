@@ -7,6 +7,7 @@ import {
 } from "@/components/ui/resizable"
 import AppSidebar from './blocks/sidebar/AppSidebar';
 import { SidebarProvider } from '@/components/ui/sidebar';
+import TabsBlock from './blocks/tabs';
 const PainelContent = () => {
 
     const [database, setDatabase] = React.useState()
@@ -33,9 +34,12 @@ const PainelContent = () => {
         </ResizablePanel>
         <ResizableHandle withHandle />
         <ResizablePanel defaultSize={80}>
-            <div className="flex h-full items-center justify-center p-6">
+
+            {/* <div className="flex h-full items-center justify-center p-6">
                 <span className="font-semibold">Content</span>
-            </div>
+            </div> */}
+
+            <TabsBlock />
         </ResizablePanel>
     </ResizablePanelGroup>
 }
